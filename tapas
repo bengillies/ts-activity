@@ -10,6 +10,10 @@
 <body>
     <div id="message"></div>
     <div class="box">
+        <h1 title="from spaces you follow">&#8857;</h1>
+        <ul id="bbox" class="tiddlers"></ul>
+    </div>
+    <div class="box">
         <h1 title="tagged for you">@</h1>
         <ul id="atbox" class="tiddlers"></ul>
     </div>

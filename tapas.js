@@ -23,6 +23,7 @@ $(function() {
     });
 
     var calculateSize = function() {
+        return 20;
         var empx = $('#sizer').width();
         var height = $(window).height();
         var limit = Math.floor(height/(empx * 7) - 1);
@@ -32,7 +33,7 @@ $(function() {
     var getFriends = function(user) {
         $.ajax({
             dataType: 'json',
-            url: '/search?q=bag:' + user + '_public' +
+            url: '/search?q=modifier:' + user +
              '%20tag:follow%20_limit:100',
             success: function(tiddlers) {
                 var friends = [];
@@ -40,6 +41,7 @@ $(function() {
                     friends.push(tiddler.title.replace(/^@/, ''));
                 });
                 friendSearchUrl(friends);
+                bagSearchUrl(friends);
             }
         });
     };
@@ -63,6 +65,28 @@ $(function() {
         fbox.start();
     };
 
+    var bagSearchUrl = function(friends) {
+        var bags = $.map(friends, function(friend) {
+            return friend + '_public';
+        });
+        var search = bags.join('%20OR%20bag:');
+        var url = '/search?q=bag:' + search;
+        bagSearchSubs(bags, url);
+    };
+
+    var bagSearchSubs = function(bags, searchUrl) {
+        var subs = [];
+        $.each(bags, function(index, bag) {
+            subs.push('bag/' + bag);
+        });
+        var bbox = new Tiddlers($('#bbox'),
+            socketuri,
+            searchUrl,
+            subs,
+            {sizer: calculateSize});
+        bbox.start();
+    };
+
     var fboxSetup = function(user) {
         getFriends(user);
     };
@@ -72,7 +96,7 @@ $(function() {
         if (typeof(io) === 'undefined') {
             $('#message')
                 .text('Unable to access socket server, functionality limited');
-        } 
+        }
         var username = status.username;
         var upbox = new Tiddlers($('#upbox'),
                 socketuri,
@@ -97,7 +121,7 @@ $(function() {
         url: "/status",
         dataType: "json",
         success: function(data) {
-            init(data); 
+            init(data);
         },
         error: function(xhr, status, error) {
             $('#message').text('Unable to determine username');
