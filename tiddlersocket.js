@@ -6,7 +6,8 @@ var Tiddlers = (function($) {
 
     var Tiddlers = function(el, socketuri, sourceuri, updater, options) {
         this.el = el;
-        this.source = sourceuri + ';sort=modified';
+        this.source = sourceuri;
+        this.sourceEnding = '%20_limit:100;sort=modified';
         this.updater = updater;
         if (options.sizer.toExponential) {
             this.sizer = function () {
@@ -16,7 +17,7 @@ var Tiddlers = (function($) {
             this.sizer = options.sizer;
         } else {
             this.sizer = function() {
-                return 6; // if no sizer, so show 5 things
+                return 50; // if no sizer, so show 50 things
             };
         }
         if (typeof(io) !== 'undefined') {
@@ -33,6 +34,13 @@ var Tiddlers = (function($) {
                 });
             });
         }
+        // set up infinite scroll
+        this.scrollLoading = false; // loading the next result set
+
+        // cache as binding to scroll is expensive
+        this.height = this.el.height();
+
+        el.bind('scroll', this.infiniteScroll.bind(this));
     };
 
     $.extend(Tiddlers.prototype, {
@@ -42,22 +50,25 @@ var Tiddlers = (function($) {
             var self = this;
             $.ajax({
                 dataType: 'json',
-                url: this.source,
+                url: this.source + this.sourceEnding,
                 success: function(tiddlers) {
                     $.each(tiddlers, function(index, tiddler) {
                         self.push(tiddler);
                     });
+                    self.oldestDate = tiddlers[0].modified;
                 }
             });
         },
 
         push: function(tiddler) {
             this.queue.push(tiddler);
-            this.updateUI();
+            var li = this.createTiddlerEl();
+            this.el.trigger('tiddlersUpdate');
+            this.el.prepend(li);
         },
 
-        updateUI: function() {
-            var tiddler = this.queue.shift(),
+        createTiddlerEl: function(tid) {
+            var tiddler = tid || this.queue.shift(),
                 href = tiddler.uri,
                 tiddlerDate = dateString(tiddler.modified);
 
@@ -84,17 +95,11 @@ var Tiddlers = (function($) {
                 alt: tiddler.bag});
             spacelink.append(spaceIcon);
 
-            var li = $('<li>')
+            return $('<li>')
                 .append(link)
                 .append(abbr)
                 .prepend(spacelink)
                 .prepend(modlink);
-
-            this.el.trigger('tiddlersUpdate');
-            this.el.prepend(li);
-            while (this.el.children().length > this.sizer()) {
-                this.el.children().last().remove();
-            }
         },
 
         getTiddler: function(uri) {
@@ -104,6 +109,38 @@ var Tiddlers = (function($) {
                 url: uri,
                 success: function(tiddler) {
                     self.push(tiddler);
+                }
+            });
+        },
+
+        infiniteScroll: function(ev) {
+            if (!this.scrollLoading) {
+                var currentPosition = this.height + $(ev.target).scrollTop(),
+                    bottomPosition = this.el[0].scrollHeight - 100,
+                    nearBottom = currentPosition >= bottomPosition;
+                if (nearBottom) {
+                    this.scrollLoading = true;
+                    this.loadOldTiddlers();
+                }
+            }
+        },
+
+        loadOldTiddlers: function() {
+            var self = this;
+            $.ajax({
+                dataType: 'json',
+                url: this.source + '%20_limit:1000;select=modified:<' + this.oldestDate +
+                    ';sort=-modified;limit=30',
+                success: function(tiddlers) {
+                    if (tiddlers.length) {
+                        $.each(tiddlers, function(i, tiddler) {
+                            var li = self.createTiddlerEl(tiddler);
+                            self.el.trigger('tiddlersUpdate');
+                            self.el.append(li);
+                        });
+                        self.oldestDate = tiddlers[tiddlers.length-1].modified;
+                    }
+                    self.scrollLoading = false;
                 }
             });
         }
