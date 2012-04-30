@@ -5,12 +5,12 @@
     <link rel="stylesheet" type="text/css"
     href="/bags/common/tiddlers/reset.css">
     <link rel="stylesheet" type="text/css"
-    href="http://tiddlyspace.com/bags/tapas_extra/tiddlers/tapas.css">
+    href="http://tiddlyspace.com/bags/bengillies_public/tiddlers/tapas.css">
 </head>
 <body>
     <div id="message"></div>
     <div class="box">
-        <h1 title="from spaces you follow">&#8857;</h1>
+        <h1 title="from spaces you follow">&#9634;</h1>
         <ul id="bbox" class="tiddlers"></ul>
     </div>
     <div class="box">
@@ -26,14 +26,16 @@
         <ul id="upbox" class="tiddlers"></ul>
     </div>
     <div id="sizer">M</div>
-    <div id="more"><a href="http://cdent.tiddlyspace.com/tapas"
-            title="more info">?</a></div>
+    <div id="more">
+        <input type="text" id="newsub" value="#tag, +modifier or @space">
+        <button id="addsub">+</button>
+    </div>
 </body>
 <script src="/bags/common/tiddlers/jquery.js"></script>
 <script src="http://tiddlyspace.com/bags/tapas_extra/tiddlers/jquery.timeago.js"></script>
 <script src="http://tiddlyspace.com:8081/socket.io/socket.io.js"></script>
-<script src="http://tiddlyspace.com/bags/tapas_extra/tiddlers/tiddlersocket.js"></script>
-<script src="http://tiddlyspace.com/bags/tapas_extra/tiddlers/tapas.js"></script>
+<script src="http://tiddlyspace.com/bags/bengillies_public/tiddlers/tiddlersocket.js"></script>
+<script src="http://tiddlyspace.com/bags/bengillies_public/tiddlers/tapas.js"></script>
 <script src="/bags/common/tiddlers/backstage.js"></script>
 </html>
 

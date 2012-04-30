@@ -73,7 +73,7 @@ var Tiddlers = (function($) {
                 tiddlerDate = dateString(tiddler.modified);
 
             var link = $('<a>').attr({'href': href,
-                target: '_blank'}).text(tiddler.title);
+                target: '_blank', 'class': 'link'}).text(tiddler.title);
 
             var abbr = $('<abbr>').attr({'class': 'timeago',
                 title: tiddlerDate}).text(tiddlerDate);
