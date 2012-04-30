@@ -52,6 +52,7 @@
 
 html {
 	height: 100%;
+	background-image: url(/bags/common/tiddlers/HtmlBackground);
 }
 
 body {

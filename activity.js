@@ -202,6 +202,16 @@ $(function() {
 		}
 	});
 
+	$(document.body).bind('mousewheel', function(ev) {
+		var x = ev.originalEvent.wheelDeltaX,
+			y = ev.originalEvent.wheelDeltaY;
+
+		if (x*x > (y*y * 2)) {
+			ev.preventDefault();
+			window.scrollBy(-x/2, 0);
+		}
+	});
+
 	//init
 	$.ajax({
 		url: "/status",
