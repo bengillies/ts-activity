@@ -17,42 +17,33 @@
 	position: absolute;
 	right: 48px;
 	font-size: 1.5em;
-	border-bottom-left-radius: 3px;
-	border: 1px solid #7E7E7E;
+	border: 1px solid #344869;
 	top: 13px;
-	border-top-left-radius: 3px;
-	color:#eeeef0;
+	color: #A7A6A9;
 	width: 14em;
-	box-shadow: 0 0 3px #7e7e7e;
 }
 
 #newsub:focus {
-	color: black;
+	color: #7E7D7F;
+	outline: none;
 }
 
 #addsub {
-	border-radius: 20em;
 	border: 0;
-	width: 50px;
-	height: 50px;
+	width: 40px;
+	height: 32px;
 	position: relative;
-	top: 6px;
+	top: 15px;
 	right: 6px;
-	font-size: 200%;
-	background: -webkit-linear-gradient(top, rgba(191, 210, 85, 1) 0%,rgba(142, 185, 42, 1) 50%,rgba(114, 170, 0, 1) 51%,rgba(158, 203, 45, 1) 100%);
-	background: -moz-linear-gradient(top, rgba(191, 210, 85, 1) 0%,rgba(142, 185, 42, 1) 50%,rgba(114, 170, 0, 1) 51%,rgba(158, 203, 45, 1) 100%);
-	background: -ms-linear-gradient(top, rgba(191, 210, 85, 1) 0%,rgba(142, 185, 42, 1) 50%,rgba(114, 170, 0, 1) 51%,rgba(158, 203, 45, 1) 100%);
-	background: -ms-linear-gradient(top, rgba(191, 210, 85, 1) 0%,rgba(142, 185, 42, 1) 50%,rgba(114, 170, 0, 1) 51%,rgba(158, 203, 45, 1) 100%);
-	background: -o-linear-gradient(top, rgba(191, 210, 85, 1) 0%,rgba(142, 185, 42, 1) 50%,rgba(114, 170, 0, 1) 51%,rgba(158, 203, 45, 1) 100%);
-	background: linear-gradient(top, rgba(191, 210, 85, 1) 0%,rgba(142, 185, 42, 1) 50%,rgba(114, 170, 0, 1) 51%,rgba(158, 203, 45, 1) 100%);
-	color: white;
-	box-shadow: 0px 0px 5px #444;
-	text-shadow: 1px 1px 1px #444;
+	font-size: 131%;
+	background-color: #344869;
+	color: #e5e4e0;
+	cursor: pointer;
 }
 
 html {
 	height: 100%;
-	background-image: url(/bags/common/tiddlers/HtmlBackground);
+	background-color: rgba(245, 244, 240, .9);;
 }
 
 body {
@@ -63,26 +54,23 @@ body {
 	overflow-x: auto;
 	overflow-y: hidden;
 	white-space: nowrap;
+	margin-left: 1em;
 }
 
 .box {
-	width: 23em;
+	width: 21em;
 	height: 100%;
 	position: relative;
 	display: inline-block;
 	white-space: normal;
 	box-sizing: border-box;
 	padding-top: 35px;
-	background: rgba(245, 244, 240, 0.9);
-	border-width: 0 1px;
-	border-style: solid;
-	border-color: #443;
+	margin-right: 1em;
 }
 
 .box h1 {
 	font-size: 400%;
 	text-align: center;
-	border-bottom: 1px solid #443;
 	width: 100%;
 }
 
@@ -99,20 +87,48 @@ body {
 	padding-top: 1em;
 	padding-bottom: 1em;
 	overflow: hidden;
-	background: #f5f4f0;
-	border-bottom: 1px solid #443;
+	border-bottom: 1px solid #d5d4d0;
+	border-top: 1px solid #fffefa;
 }
 
 .tiddlers {
 	overflow: auto;
 	position: absolute;
 	top: 125px;
+	left: 2%;
 	bottom: 0;
-	width: 100%;
+	width: 96%;
+	border: 1px solid #443;
+	background-color: #f5f4f0;
+	border-bottom: 0;
+	box-shadow: 0 0 12px #7e7e79;
+}
+
+body::-webkit-scrollbar {
+	height: 6px;
+}
+
+.tiddlers::-webkit-scrollbar {
+	width: 6px;
+}
+
+body::-webkit-scrollbar-thumb,
+.tiddlers::-webkit-scrollbar-thumb {
+	background-color: #7e7e79;
+}
+
+body::-webkit-scrollbar-track {
+	background-color: #e5e4e0;
+	border-top: 1px solid #d5d4d0;
+}
+
+.tiddlers::-webkit-scrollbar-track {
+	background-color: #e5e4e0;
+	border-left: 1px solid #d5d4d0;
 }
 
 a {
-	color: #BC4378;
+	color: #344869;
 	text-decoration: none;
 }
 
@@ -142,10 +158,12 @@ a {
 	display: block;
 	font-style: italic;
 	font-size: 75%;
+	color: #78787A;
 }
 
 .box li:hover {
-	background-color: transparent;
+	background-color: #e5e4e0;;
+	border-top-color: #e5e4e0;
 }
 
 .close {
